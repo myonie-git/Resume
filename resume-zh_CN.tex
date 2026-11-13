@@ -18,79 +18,81 @@
 	\begin{spacing}{1.1}
 		
 		\section{研究兴趣}
-		研究大规模 AI 系统的片间互联（Scale-up）、超节点架构与集群互联（Scale-out），关注 GPU/NPU 集合通信库（CCL）优化、异构系统与大模型推理系统的性能优化。
+		大规模 AI 系统的片间互联（Scale-up）、集群互联（Scale-out）、超节点架构、GPU/NPU 集合通信库（CCL），以及异构系统与大模型推理系统性能优化。
 		
 		
 		
 		% \section{\faGraduationCap\ 教育背景}
 		\section{教育背景}
-		\datedsubsection{\textbf{清华大学}，精密仪器系，类脑计算中心，\textit{在读博士研究生，导师：赵蓉 教授}}{2023.09 - 2028.06}
+		\datedsubsection{\textbf{清华大学}，精密仪器系，类脑计算中心，\textit{直博生，导师：赵蓉 教授}}{2023.09 - 2028.06}
 		\textbf{研究方向}：AI 系统与体系结构、异构计算、高速互联与集合通信、大模型高效推理。
 		\datedsubsection{\textbf{浙江大学}，电气工程学院，电子信息工程，\textit{工学学士}}{2019.09 - 2023.06}
-		\ \textbf{计算机科学与技术双学位}，爱迪生实验班，卓越人才培养班成员，专业排名（10/83）
+		\textbf{计算机科学与技术双学位}，爱迪生实验班，卓越人才培养班成员，专业排名 10/83
 		
 		\section{科研经历}
 		
 		\datedsubsection{\textbf{Moeving}：面向动态负载的 MoE Serving 运行时系统}{2026.06 - 2026.09}
 		\textit{一作，在投 ASPLOS 2027}
 		\begin{itemize}
-			\item 基于\textbf{Token 负载均衡并不等价于时延最优}的观察，提出联合建模专家计算与 All-to-All 通信时序耦合的放置优化方法，构建跨平台时延评估器与优化器；增量代价评估较全量重评估加速约\textbf{50×}。
-			\item 发现\textbf{专家负载在 Token、请求与语义三个时间尺度上漂移}，使静态放置逐渐失效；基于此，设计多时间尺度自适应运行时，结合专家副本、按需重放置与主动请求调度，分别吸收、跟踪与预测负载漂移；相比重建 Token 均衡放置，每次重配置的专家权重迁移量减少\textbf{83\%}。
-			\item 将 Moeving 集成到 \textbf{vLLM} 中。相较于 EPLB，在 8×A100、8×RTX 3090 与晶圆级平台上的端到端时延分别降低\textbf{23.1\%、42.9\% 和 27.6\%}。
+			\item 发现\textbf{Token 负载均衡并不等价于时延最优}，提出联合建模专家计算与 All-to-All 通信的放置优化方法，其时延评估器的预测与实测相关性达 95\% 以上。
+			\item 发现专家负载在 Token、请求、语义三个时间尺度上漂移，设计多时间尺度自适应运行时，在线跟踪随之变化的最优放置。
+			\item 将 Moeving 集成到 vLLM 中。相较于 EPLB，在 8×A100、8×RTX 3090 与晶圆级平台上的端到端时延分别降低\textbf{23.1\%、42.9\% 和 27.6\%}。
 		\end{itemize}
-		
-		\datedsubsection{\textbf{Tianjic-D} 类脑计算芯片与系统开发（项目负责人）}{2025.04 - 至今}
+
+		\datedsubsection{\textbf{NPU-SiM}：万卡十万核级开源集群仿真平台}{2025.03 - 2026.01}
+		\textit{核心贡献者，GitHub 100+ Stars，github.com/doulujiyao12/npu-sim}
 		\begin{itemize}
-			\item 负责\textbf{Tianjic-D 类脑计算芯片的设计、开发与验证}。芯片采用 16 芯粒合封，集成\textbf{256 个计算核}，支持人工神经网络与脉冲神经网络的训练和推理。
-			\item 主导\textbf{FPGA Controller 设计与开发}，构建\textbf{ACCLink 高速互联至芯片 LVDS 接口}的通信通路，设计 SPI 控制及 AXI4/DDR 数据通路，支撑芯片配置、数据下发与计算结果回传。
-			\item 负责\textbf{EVB/公版板卡设计、LVDS/SerDes 电路高速调试}、芯片测试与验证、复杂模型及板卡性能测试。
-			\item 主导\textbf{脑启云接入}，梳理驱动、计算 Runtime/SDK 与平台设备管理接口，制定设备纳管、单卡计算及多卡/异构协同的联调验收流程。
+			\item 支持从芯片内部、板级、节点级到万卡集群级的多尺度仿真，以及 GPU/NPU 异构混合仿真。
+			\item 负责核内仿真、NoC 路由建模及 CCL 算法模块的设计与实现，成果已用于初创企业的硬件设计决策。
 		\end{itemize}
-		
+
+		\datedsubsection{\textbf{Tianjic-D}：类脑计算芯片与系统开发}{2025.04 - 至今}
+		\textit{项目负责人，芯片已回片并成功点亮}
+		\begin{itemize}
+			\item 负责芯片的设计、开发与验证。芯片采用 16 芯粒合封，集成\textbf{256 个计算核}，支持人工神经网络与脉冲神经网络的训练和推理。
+			\item 主导 FPGA 控制器设计，构建 ACCLink 高速互联与芯片 LVDS 通信通路，支撑芯片配置、数据下发与结果回传。
+			\item 负责 EVB 板与公版板卡设计、LVDS/SerDes 高速链路调试、芯片测试验证与模型性能测试。
+			\item 设计 8 卡的超节点集群方案，节点间通过 ACCLink 高速互联。
+			\item 主导芯片接入脑启云平台，基于 Kubernetes 设计并开发设备纳管、单卡计算与多卡协同功能。
+		\end{itemize}
+
+		\datedsubsection{\textbf{WaferFuse}：面向晶圆级平台的 MoE 计算通信融合执行系统}{2026.09 - 至今}
+		\textit{一作，拟投 OSDI 2027}
+		\begin{itemize}
+			\item 拟面向晶圆级平台设计\textbf{MoE Mega-kernel} 执行框架，融合 Token 分发、专家计算与结果聚合，探索跨核细粒度流水与同步机制，重叠计算和通信，减少中间数据搬运及阶段等待。
+		\end{itemize}
+
 		\datedsubsection{\textbf{BACON}：通用刚体机器人碰撞检测加速器框架}{2024.03 - 2024.11}
 		\textit{一作，TCAD 2026 已接收}
 		\begin{itemize}
-			\item 提出首个可为任意结构刚体机器人快速生成高效、高精度加速器的框架，结合动态-静态解耦设计、蒙特卡洛树搜索优化和结构感知调度器，有效解决了实时性、泛化性与负载不均问题。
-			\item 在 Xilinx VCU118 FPGA 上实现，相比 CPU 与 GPU 分别实现 \textbf{17.85×} 与 \textbf{2.62×} 平均加速比。
+			\item 提出首个可为任意结构刚体机器人快速生成加速器的框架，结合动态-静态解耦设计、蒙特卡洛树搜索优化和结构感知调度器。
+			\item 在 Xilinx VCU118 FPGA 上实现，相比 Jetson AGX Orin 的 CPU 与 GPU 平均加速\textbf{17.85× 与 2.62×}。
 		\end{itemize}
 		
-		\datedsubsection{\textbf{NPU-SiM} 万卡十万核级开源集群仿真平台（核心贡献者，GitHub 100+ Stars）}{2025.03 - 2026.01}
-		\begin{itemize}
-			\item 聚焦开源集群仿真与互联架构建模，支持从 chiplet 级（芯片内部）、link 级（板级）、Band 级（节点级）到万卡集群级的多尺度仿真，实现高精度核内计算仿真与 GPU/NPU 异构混合仿真。
-			\item 负责核内仿真、NoC 路由建模及 CCL 算法模块的设计与实现；相关成果已应用于初创企业的真实硬件设计决策流程。项目地址：https://github.com/doulujiyao12/npu-sim
-		\end{itemize}
-		
-		
-		\datedsubsection{\textbf{WaferFuse}：面向晶圆级平台的 MoE 计算通信融合执行系统}{2026.09 - 2026.12}
-		\textit{一作，In preparation for OSDI 2027}
-		\begin{itemize}
-			\item 拟面向晶圆级平台设计\textbf{MoE Mega-kernel 执行框架}，融合 Token 分发、专家计算与结果聚合，探索跨核细粒度流水与同步机制，重叠计算和通信，减少中间数据搬运及阶段等待。
-		\end{itemize}
-		
-		\newpage
 		\section{实习经历}
 		
 		\datedsubsection{\textbf{华为}，2012 / 中央软件院 / 操作系统部 / 欧拉实验室}{2026.09 - 2026.11}
 		\textit{研究方向：昇腾大模型推理优化与动态 C8 量化}
 		\begin{itemize}
-			\item 在昇腾 NPU 上实现\textbf{动态 C8 量化推理算子}，为 Lightning Indexer 与 Sparse Flash Attention 提供 INT8 缓存读写。通过 C++/Python 接口将算子接入推理框架，支持逐层量化与混合精度配置。
-			\item 设计\textbf{分组动态量化与 KV-cache 存储布局}，支持 BF16 位置编码独立存储及分页缓存读写。在评估配置下，\textbf{Indexer K 与 SFA KV 的单 token 缓存占用分别减少 49.2\% 和 43.1\%}（含 scale 开销）。
+			\item 在昇腾 NPU 上实现\textbf{动态 C8 量化推理算子}，为 Lightning Indexer 与 Sparse Flash Attention 提供 INT8 缓存读写。已接入 vLLM-Ascend 与 xlite，支持逐层量化与混合精度配置。
+			\item 设计\textbf{分组动态量化与 KV-cache 存储布局}，支持 BF16 位置编码独立存储及分页缓存读写。在评估配置下，\textbf{Indexer K 与 SFA KV 的单 token 缓存占用分别减少 49.2\% 和 43.1\%}。
 			\item 开发\textbf{RMSNorm/RoPE/量化写缓存融合内核}及\textbf{Gather--反量化--MLA 分块融合}，减少算子启动、数据搬运及长 Prefill 的临时缓存开销；结合 msprof 优化 GM/UB 搬运、双缓冲与 Cube/Vector 流水线。
-			\item 为\textbf{openEuler GVirt} 开发动态 C8 量化算子，为\textbf{vLLM-Ascend} 适配推理后端，累计提交\textbf{9 个 PR}，其中\textbf{3 个已合入 GVirt}。
+			\item 为\textbf{openEuler GVirt} 开发动态 C8 量化算子，为\textbf{vLLM-Ascend} 适配推理后端，累计贡献\textbf{50 余个提交}，主要功能已合入 GVirt 主线。
+			\item 评测量化方案的性能，并探索动态量化方案，如基于 top-k 选择量化精度等。
+		\end{itemize}
+		
+		\datedsubsection{\textbf{探微芯联科技有限公司}，系统板卡与高速互联研发}{2025.09 - 2026.04}
+		\begin{itemize}
+			\item 基于 NPU-SiM 对 ACCLink（面向超节点的高速互联协议）方案做仿真评估，支撑硬件设计决策。
+			\item 参与\textbf{ACCLink 高速互联模块与板上 FPGA 控制器的 RTL 集成}，协同软硬件团队开展接口验证与板级联调。
+			\item 面向天机（Tianjic-D）芯片验证与模型测试，设计\textbf{芯片评估板（EVB）与公版计算板卡}，规划板上 FPGA 与芯片之间的 SPI 配置接口和 LVDS 数据接口。
 		\end{itemize}
 		
 		\datedsubsection{\textbf{快手科技}，研发线 / 基础设施部门 / 高性能网络研发组}{2025.06 - 2025.08}
 		\textit{研究方向：面向大规模 AI 训练的启动加速与动态弹性扩缩容}
 		\begin{itemize}
-			\item \textbf{背景}：可灵（Kling）视频生成模型千卡级训练中，单次任务启动耗时长，叠加 GPU / 网络故障导致任务频繁重启，集群有效训练时间占比偏低。
-			\item \textbf{方案}：在不销毁训练任务的前提下，让训练框架（Megatron-LM / PyTorch）与通信库（NCCL）复用已初始化的计算、通信资源与模型状态，实现任务级热切换 / 热扩容 / 热缩容。
-			% 建议补一条量化成果：如 "启动时间从 X 分钟降至 Y 秒" 或 "在 XX 规模集群上验证可用"
-		\end{itemize}
-		
-		\datedsubsection{\textbf{探微芯联科技有限公司}，系统板卡与高速互联研发}{2025.09 - 2026.04}
-		\begin{itemize}
-			\item 面向天机（Tianjic-D）芯片验证与模型测试，设计\textbf{芯片评估板（EVB）与公版计算板卡}，规划板上 FPGA 与芯片之间的 SPI 配置接口和 LVDS 数据接口。
-			\item 参与\textbf{ACCLink 高速互联模块与板上 FPGA 控制器的 RTL 集成}，协同软硬件团队开展接口验证与板级联调。
+			\item 针对可灵（Kling）千卡级训练中任务启动慢、故障后频繁重启的问题，调研训练启动加速与动态弹性扩缩容方案，分析 NCCL Shrink 机制。
+			\item 基于 NVIDIA Resiliency Extension（NVRx）搭建训练容错平台，用于验证故障后的快速恢复。
 		\end{itemize}
 		
 		
@@ -106,18 +108,18 @@
 		\section{技术技能}
 		\begin{itemize}[parsep=0.2ex]
 			\item \textbf{编程语言}：C / C++、Python、Verilog / SystemVerilog、CUDA
-			\item \textbf{AI 系统}：PyTorch、vLLM、NCCL、Megatron-LM、HuggingFace
+			\item \textbf{AI 系统}：PyTorch、vLLM、NCCL、Megatron-LM、昇腾 CANN（Ascend C 算子开发）
 			\item \textbf{硬件设计与仿真}：Vivado、Verilator、FPGA 原型验证、RTL 仿真、NoC 建模、离散事件仿真
-			\item \textbf{工具链}：Linux、tmux、Git、conda、Docker、\LaTeX
+			\item \textbf{工具链}：Linux、Git、Docker、Kubernetes、msprof、Nsight
 		\end{itemize}
 		
 		
 		\section{竞赛获奖}
 		% increase linespacing [parsep=0.5ex]
 		\begin{itemize}[parsep=0.2ex]
-			\item 高教社杯全国大学生数学建模竞赛 \textbf{国家一等奖}，2021 年
-			\item 基于嵌入式系统的车牌识别研究，国家级全国大学生创新创业计划，\textbf{项目负责人}，获优秀评级，2020 - 2022 年
-			\item 全国大学生智能车竞赛浙江省二等奖，\textbf{项目负责人}，2022 年
+			\item 高教社杯全国大学生数学建模竞赛\textbf{国家一等奖}，2021 年
+			\item 国家级大学生创新创业训练计划“基于嵌入式系统的车牌识别研究”，项目负责人，\textbf{获优秀评级}，\mbox{2020--2022 年}
+			\item 全国大学生智能汽车竞赛\textbf{浙江省二等奖}，项目负责人，2022 年
 		\end{itemize}
 		
 		
@@ -125,9 +127,9 @@
 		% increase linespacing [parsep=0.5ex]
 		\begin{itemize}[parsep=0.2ex]
 			
-			\item 	\datedsubsection{开源项目 NPU-SiM 核心贡献者}{2025.03 - 2026.01}
-			\item 	\datedsubsection{开源项目 openEuler GVirt 核心贡献者}{2026.09 - 2026.11}
-			\item 	\datedsubsection{开源项目 vLLM-Ascend 贡献者}{2026.09 - 2026.11}
+			\item openEuler GVirt 核心贡献者 \hfill 2026.09 - 2026.11
+			\item vLLM-Ascend XLite 后端适配 \hfill 2026.09 - 2026.11
+			\item NPU-SiM 核心贡献者 \hfill 2025.03 - 2026.01
 			
 		\end{itemize}
 		

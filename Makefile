@@ -1,29 +1,25 @@
-SRC = $(wildcard *.tex)
+MAIN   = resume-zh_CN
+TEX    = xelatex
+FLAGS  = -interaction=nonstopmode -halt-on-error
+DEPS   = $(MAIN).tex resume.cls $(wildcard *.sty fonts/Main/*.otf fonts/zh_CN-Adobe/*.otf)
 
-PDFS = $(SRC:.tex=.pdf)
-PYTHON ?= python
+.PHONY: all pdf zh_CN preview clean distclean
 
-all:	pdf
+all: pdf
 
-en:	clean xelatex resume.tex
+pdf zh_CN: $(MAIN).pdf
 
-zh_CN:	resume-zh_CN.pdf
+$(MAIN).pdf: $(DEPS)
+	$(TEX) $(FLAGS) $(MAIN).tex
 
-pdf:	$(PDFS)
+# 生成每页的 PNG 预览（需要 pdftoppm）
+preview: $(MAIN).pdf
+	pdftoppm -r 110 -png $(MAIN).pdf $(MAIN)
 
-resume-zh_CN.pdf: resume-zh_CN.tex resume.cls $(wildcard *.sty fonts/Main/*.otf fonts/zh_CN-Adobe/*.otf) build_resume.py
-	"$(PYTHON)" build_resume.py
-
-%.pdf:  %.tex
-	xelatex $<
-
-ifeq ($(OS),Windows_NT)
-  # on Windows
-  RM = cmd //C del
-else
-  # on Unix/Linux
-  RM = rm -f
-endif
-
+# 只清理中间文件，保留 PDF
 clean:
-	$(RM) *.log *.aux *.bbl *.blg *.synctex.gz *.out *.toc *.lof *.idx *.ilg *.ind *.pdf
+	rm -f *.log *.aux *.out *.toc *.synctex.gz *.bbl *.blg
+
+# 连 PDF 和预览图一起清理
+distclean: clean
+	rm -f $(MAIN).pdf $(MAIN)-*.png

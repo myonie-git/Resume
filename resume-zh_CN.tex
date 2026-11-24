@@ -7,6 +7,9 @@
 %\usepackage{zh_CN-Adobefonts_internal} % Simplified Chinese Support using system fonts
 \usepackage{linespacing_fix} % disable extra space before next section
 \usepackage{cite}
+% 分页规则：不在条目的角色行和要点列表之间分页，也不把一条要点的首行或末行单独留在一页
+\setlist*[itemize]{beginpenalty=10000}
+\clubpenalty=10000 \widowpenalty=10000
 
 \begin{document}
 	\pagenumbering{gobble} % suppress displaying page number
@@ -39,11 +42,35 @@
 			\item 将 Moeving 集成到 vLLM 中。相较于 EPLB，在 8×A100、8×RTX 3090 与晶圆级平台上的端到端时延分别降低\textbf{23.1\%、42.9\% 和 27.6\%}。
 		\end{itemize}
 
+		\datedsubsection{\textbf{InfraOS}：面向多人与智能体共用场景的多卡 GPU 服务器操作系统}{2026.11 - 至今}
+		\textit{一作，拟投 OSDI 2027}
+		\begin{itemize}
+			\item 提出\textbf{借用窗口}机制，使运行 Serving 或训练任务的多卡服务器可被临时借用做算子性能测试，结束后原任务原样恢复。
+			\item 设计\textbf{步边界一致暂停}，让长任务的所有卡在同一推理或训练步边界停下和恢复，只损失窗口时长。探索在同一边界上原地换算子并在线对比性能，服务不中断。
+			\item 设计\textbf{显存原地借出}，把长任务空闲的 KV 块和缓存显存直接借给短任务，不搬运数据，可随时收回。
+			\item 设计\textbf{可信测量}，隔离同机 CPU 与 PCIe 干扰，在被测进程外计时，并为每次测量附上整机状态证明。
+			\item 已在 8×RTX 4090 上用 vLLM 推理和 DDP 训练验证可行性，窗口内算子计时与空机相差\textbf{不到 1\%}。
+		\end{itemize}
+
+		\datedsubsection{\textbf{Mooring}：面向 MoE 推理的 GPU 与众核异构系统建模与设计空间探索}{2026.08 - 2026.11}
+		\textit{一作，在投 TCAD}
+		\begin{itemize}
+			\item 针对专家权重挤占 GPU HBM、限制并发度的问题，提出计入 KV 容量挤占代价的异构分层资源模型，并构建容量优先的专家驻留规划器、请求级仿真器与设计空间搜索引擎。
+			\item 在 7 款 MoE 模型与 6 类器件上探索 1,848 种配置，总结出覆盖芯片规格、系统配比与专家映射的 7 条设计准则，例如冷专家优先卸载、KV 受限时避免 GPU 冗余副本。
+			\item 探索结果表明，在 Qwen3-235B 上，8×H100 搭配 32 颗众核芯片可支撑 80~req/s，高于 16×H100 的 55~req/s。
+		\end{itemize}
+
 		\datedsubsection{\textbf{NPU-SiM}：万卡十万核级开源集群仿真平台}{2025.03 - 2026.01}
 		\textit{核心贡献者，GitHub 100+ Stars，github.com/doulujiyao12/npu-sim}
 		\begin{itemize}
 			\item 支持从芯片内部、板级、节点级到万卡集群级的多尺度仿真，以及 GPU/NPU 异构混合仿真。
 			\item 负责核内仿真、NoC 路由建模及 CCL 算法模块的设计与实现，成果已用于初创企业的硬件设计决策。
+		\end{itemize}
+
+		\datedsubsection{\textbf{WaferFuse}：面向晶圆级平台的 MoE 计算通信融合执行系统}{2026.09 - 至今}
+		\textit{一作，拟投 OSDI 2027}
+		\begin{itemize}
+			\item 拟面向晶圆级平台设计\textbf{MoE Mega-kernel} 执行框架，融合 Token 分发、专家计算与结果聚合，探索跨核细粒度流水与同步机制，重叠计算和通信，减少中间数据搬运及阶段等待。
 		\end{itemize}
 
 		\datedsubsection{\textbf{Tianjic-D}：类脑计算芯片与系统开发}{2025.04 - 至今}
@@ -56,10 +83,12 @@
 			\item 主导芯片接入脑启云平台，基于 Kubernetes 设计并开发设备纳管、单卡计算与多卡协同功能。
 		\end{itemize}
 
-		\datedsubsection{\textbf{WaferFuse}：面向晶圆级平台的 MoE 计算通信融合执行系统}{2026.09 - 至今}
-		\textit{一作，拟投 OSDI 2027}
+		\datedsubsection{\textbf{OrderFree}：面向稀疏注意力大模型推理的无抖动 KV 复用架构}{2026.09 - 2026.11}
+		\textit{一作，在投 DAC 2027}
 		\begin{itemize}
-			\item 拟面向晶圆级平台设计\textbf{MoE Mega-kernel} 执行框架，融合 Token 分发、专家计算与结果聚合，探索跨核细粒度流水与同步机制，重叠计算和通信，减少中间数据搬运及阶段等待。
+			\item 发现稀疏注意力（DeepSeek-V3.2、GLM-5.1）中相邻 query 选中的 KV 有 68\%--80\% 重合，但片上 SRAM 有限时\textbf{传统缓存会抖动}。
+			\item 利用一批 query \textbf{顺序可换、未来已知}的特点，提出窗口重排与按下次使用时间淘汰的替换策略，缺失率比最优传统策略低一半。
+			\item 完成 Verilog 实现与 28\,nm 综合。周期级仿真中，注意力内核比最优传统缓存策略快\textbf{1.39--2.03×}。
 		\end{itemize}
 
 		\datedsubsection{\textbf{BACON}：通用刚体机器人碰撞检测加速器框架}{2024.03 - 2024.11}
@@ -100,6 +129,8 @@
 		\begin{itemize}[parsep=0.2ex]
 			\item \textbf{Y. Xing}, D. Feng, H. Li, et al. ``BACON: A Body-Aware Framework for Parameterized Collision Detection Acceleration,'' \textit{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems} (\textbf{TCAD}), 2026. \textit{(First Author)}
 			\item \textbf{Y. Xing}, et al. ``Beyond Token Balance: Chasing the Drifting Optimum of Expert Placement in MoE Serving,'' \textit{Under review at \textbf{ASPLOS 2027}}. \textit{(First Author)}
+			\item \textbf{Y. Xing}, et al. ``OrderFree: Thrash-Free Spatiotemporal KV Reuse for Sparse-Attention LLM Inference,'' \textit{Under review at \textbf{DAC 2027}}. \textit{(First Author)}
+			\item L. Li\textsuperscript{\dag}, \textbf{Y. Xing}\textsuperscript{\dag}, X. Sun, et al. ``Mooring: KV-Aware Modeling and Design-Space Exploration of Heterogeneous GPU and Manycore Systems for MoE Inference,'' \textit{Under review at \textbf{TCAD}}. \textit{(First Author)}
 		\end{itemize}
 		
 		
